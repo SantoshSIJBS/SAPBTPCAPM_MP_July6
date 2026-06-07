@@ -1,0 +1,8 @@
+VIEW poapp_db_transaction_EmployeeFullDetails AS SELECT
+  employee_0.ID AS EmployeeID,
+  employee_0.nameFirst AS FirstName,
+  employee_0.nameLast AS LastName,
+  employee_0.phoneNumber AS Mobile,
+  lang_1.value AS "LANGUAGE",
+  gen_2.value AS Gender
+FROM ((poapp_db_master_Employees AS employee_0 LEFT JOIN poapp_db_transaction_Languages AS lang_1 ON employee_0."LANGUAGE" = lang_1.ID) LEFT JOIN poapp_db_transaction_Genders AS gen_2 ON employee_0.gender = gen_2.ID)

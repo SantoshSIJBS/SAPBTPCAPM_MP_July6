@@ -1,0 +1,3580 @@
+{
+  "namespace": "poapp.cdsviews",
+  "definitions": {
+    "poapp.cdsviews.CDSViews": {
+      "kind": "context"
+    },
+    "poapp.cdsviews.CDSViews.POWorklist": {
+      "kind": "entity",
+      "query": {
+        "SELECT": {
+          "from": {
+            "ref": [
+              "poapp.db.transaction.PurchaseOrders"
+            ]
+          },
+          "columns": [
+            {
+              "key": true,
+              "ref": [
+                "PO_ID"
+              ],
+              "as": "PurchaseOrderID"
+            },
+            {
+              "key": true,
+              "ref": [
+                "Items",
+                "PO_ITEMS_POS"
+              ],
+              "as": "PurchaseOrderItemPosition"
+            },
+            {
+              "ref": [
+                "PARTNER_GUID",
+                "BP_ID"
+              ],
+              "as": "BusinessPartnerID"
+            },
+            {
+              "ref": [
+                "PARTNER_GUID",
+                "COMPANY_NAME"
+              ],
+              "as": "CompanyName"
+            },
+            {
+              "ref": [
+                "PARTNER_GUID",
+                "ADDRESS_GUID",
+                "CITY"
+              ],
+              "as": "City"
+            },
+            {
+              "ref": [
+                "PARTNER_GUID",
+                "ADDRESS_GUID",
+                "COUNTRY"
+              ],
+              "as": "Country"
+            },
+            {
+              "ref": [
+                "GROSS_AMOUNT"
+              ],
+              "as": "GrossAmount"
+            },
+            {
+              "ref": [
+                "NET_AMOUNT"
+              ],
+              "as": "NetAmount"
+            },
+            {
+              "ref": [
+                "TAX_AMOUNT"
+              ],
+              "as": "TaxAmount"
+            },
+            {
+              "ref": [
+                "CURRENCY"
+              ],
+              "as": "CurrencyCode"
+            },
+            {
+              "ref": [
+                "OVERALL_STATUS"
+              ],
+              "as": "OverallStatus"
+            },
+            {
+              "ref": [
+                "Items",
+                "PRODUCT_GUID",
+                "PRODUCT_ID"
+              ],
+              "as": "ProductID"
+            },
+            {
+              "ref": [
+                "Items",
+                "PRODUCT_GUID",
+                "DESCRIPTION"
+              ],
+              "as": "ProductDescription"
+            }
+          ]
+        }
+      },
+      "elements": {
+        "PurchaseOrderID": {
+          "@title": "{i18n>PO_ID}",
+          "key": true,
+          "type": "poapp.reuse.Guid"
+        },
+        "PurchaseOrderItemPosition": {
+          "@title": "{i18n>PO_ITEMS_POS}",
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "BusinessPartnerID": {
+          "@title": "{i18n>BP_ID}",
+          "type": "poapp.reuse.Guid"
+        },
+        "CompanyName": {
+          "@title": "{i18n>COMPANY_NAME}",
+          "type": "poapp.reuse.String255",
+          "length": 255
+        },
+        "City": {
+          "@title": "{i18n>CITY}",
+          "type": "cds.String",
+          "length": 255
+        },
+        "Country": {
+          "@title": "{i18n>COUNTRY}",
+          "type": "cds.String",
+          "length": 255
+        },
+        "GrossAmount": {
+          "@title": "{i18n>GROSS_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NetAmount": {
+          "@title": "{i18n>NET_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "TaxAmount": {
+          "@title": "{i18n>TAX_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "CurrencyCode": {
+          "@title": "{i18n>CURRENCY_CODE}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "sap.common.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "OverallStatus": {
+          "@title": "{i18n>OVERALL_STATUS}",
+          "type": "cds.String",
+          "length": 1
+        },
+        "ProductID": {
+          "@title": "{i18n>PRODUCT_ID}",
+          "type": "poapp.reuse.String32",
+          "length": 32
+        },
+        "ProductDescription": {
+          "@title": "{i18n>DESCRIPTION}",
+          "type": "poapp.reuse.String255",
+          "length": 255
+        }
+      }
+    },
+    "poapp.cdsviews.CDSViews.ItemView": {
+      "kind": "entity",
+      "query": {
+        "SELECT": {
+          "from": {
+            "ref": [
+              "poapp.db.transaction.PurhcaseItems"
+            ]
+          },
+          "columns": [
+            {
+              "ref": [
+                "PARENT_KEY",
+                "PARTNER_GUID",
+                "NODE_KEY"
+              ],
+              "as": "PartnerKey"
+            },
+            {
+              "ref": [
+                "PRODUCT_GUID",
+                "NODE_KEY"
+              ],
+              "as": "ProductKey"
+            },
+            {
+              "ref": [
+                "PARENT_KEY",
+                "OVERALL_STATUS"
+              ],
+              "as": "OverallStatus"
+            },
+            {
+              "ref": [
+                "CURRENCY"
+              ],
+              "as": "Currency"
+            },
+            {
+              "ref": [
+                "GROSS_AMOUNT"
+              ],
+              "as": "GrossAmount"
+            },
+            {
+              "ref": [
+                "NET_AMOUNT"
+              ],
+              "as": "NetAmount"
+            },
+            {
+              "ref": [
+                "TAX_AMOUNT"
+              ],
+              "as": "TaxAmount"
+            },
+            {
+              "ref": [
+                "PARENT_KEY",
+                "OVERALL_STATUS"
+              ],
+              "as": "Status"
+            }
+          ]
+        }
+      },
+      "elements": {
+        "PartnerKey": {
+          "@title": "{i18n>NODE_KEY}",
+          "type": "poapp.reuse.Guid"
+        },
+        "ProductKey": {
+          "@title": "{i18n>NODE_KEY}",
+          "type": "poapp.reuse.Guid"
+        },
+        "OverallStatus": {
+          "@title": "{i18n>OVERALL_STATUS}",
+          "type": "cds.String",
+          "length": 1
+        },
+        "Currency": {
+          "@title": "{i18n>CURRENCY_CODE}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "sap.common.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "GrossAmount": {
+          "@title": "{i18n>GROSS_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NetAmount": {
+          "@title": "{i18n>NET_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "TaxAmount": {
+          "@title": "{i18n>TAX_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "Status": {
+          "@title": "{i18n>OVERALL_STATUS}",
+          "type": "cds.String",
+          "length": 1
+        }
+      }
+    },
+    "poapp.cdsviews.CDSViews.ProductView": {
+      "kind": "entity",
+      "query": {
+        "SELECT": {
+          "from": {
+            "ref": [
+              "poapp.db.master.Products"
+            ]
+          },
+          "mixin": {
+            "PO_ORDER": {
+              "type": "cds.Association",
+              "cardinality": {
+                "max": "*"
+              },
+              "target": "poapp.cdsviews.CDSViews.ItemView",
+              "on": [
+                {
+                  "ref": [
+                    "PO_ORDER",
+                    "ProductKey"
+                  ]
+                },
+                "=",
+                {
+                  "ref": [
+                    "$projection",
+                    "ProductKey"
+                  ]
+                }
+              ]
+            }
+          },
+          "columns": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ],
+              "as": "ProductKey"
+            },
+            {
+              "ref": [
+                "DESCRIPTION"
+              ],
+              "as": "Description"
+            },
+            {
+              "ref": [
+                "CATEGORY"
+              ],
+              "as": "Category"
+            },
+            {
+              "ref": [
+                "PRICE"
+              ],
+              "as": "Price"
+            },
+            {
+              "ref": [
+                "SUPPLIER_GUID",
+                "BP_ID"
+              ],
+              "as": "SupplierID"
+            },
+            {
+              "ref": [
+                "SUPPLIER_GUID",
+                "COMPANY_NAME"
+              ],
+              "as": "CompanyName"
+            },
+            {
+              "ref": [
+                "SUPPLIER_GUID",
+                "ADDRESS_GUID",
+                "CITY"
+              ],
+              "as": "City"
+            },
+            {
+              "ref": [
+                "SUPPLIER_GUID",
+                "ADDRESS_GUID",
+                "COUNTRY"
+              ],
+              "as": "Country"
+            }
+          ]
+        }
+      },
+      "elements": {
+        "ProductKey": {
+          "@title": "{i18n>NODE_KEY}",
+          "key": true,
+          "type": "poapp.reuse.Guid"
+        },
+        "Description": {
+          "@title": "{i18n>DESCRIPTION}",
+          "type": "poapp.reuse.String255",
+          "length": 255
+        },
+        "Category": {
+          "@title": "{i18n>CATEGORY}",
+          "type": "poapp.reuse.String32",
+          "length": 32
+        },
+        "Price": {
+          "@title": "{i18n>PRICE}",
+          "type": "cds.Decimal",
+          "precision": 15,
+          "scale": 2
+        },
+        "SupplierID": {
+          "@title": "{i18n>BP_ID}",
+          "type": "poapp.reuse.Guid"
+        },
+        "CompanyName": {
+          "@title": "{i18n>COMPANY_NAME}",
+          "type": "poapp.reuse.String255",
+          "length": 255
+        },
+        "City": {
+          "@title": "{i18n>CITY}",
+          "type": "cds.String",
+          "length": 255
+        },
+        "Country": {
+          "@title": "{i18n>COUNTRY}",
+          "type": "cds.String",
+          "length": 255
+        }
+      }
+    },
+    "poapp.db.master": {
+      "kind": "context"
+    },
+    "poapp.db.master.BusinessPartners": {
+      "kind": "entity",
+      "elements": {
+        "NODE_KEY": {
+          "@title": "{i18n>NODE_KEY}",
+          "key": true,
+          "type": "poapp.reuse.Guid"
+        },
+        "BP_ROLE": {
+          "@title": "{i18n>BP_ROLE}",
+          "type": "poapp.reuse.Role",
+          "length": 2
+        },
+        "EMAIL": {
+          "@title": "{i18n>EMAIL}",
+          "type": "poapp.reuse.Email",
+          "length": 255
+        },
+        "MOBILE": {
+          "@title": "{i18n>MOBILE}",
+          "type": "poapp.reuse.PhoneNumber",
+          "length": 32
+        },
+        "FAX": {
+          "@title": "{i18n>FAX}",
+          "type": "poapp.reuse.String32",
+          "length": 32
+        },
+        "WEB": {
+          "@title": "{i18n>WEB}",
+          "type": "poapp.reuse.String255",
+          "length": 255
+        },
+        "BP_ID": {
+          "@title": "{i18n>BP_ID}",
+          "type": "poapp.reuse.Guid"
+        },
+        "COMPANY_NAME": {
+          "@title": "{i18n>COMPANY_NAME}",
+          "type": "poapp.reuse.String255",
+          "length": 255
+        },
+        "ADDRESS_GUID": {
+          "@title": "{i18n>ADDRESS_GUID}",
+          "type": "cds.Association",
+          "target": "poapp.db.master.Addresses",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "poapp.db.master.Addresses": {
+      "kind": "entity",
+      "includes": [
+        "poapp.reuse.Address"
+      ],
+      "elements": {
+        "STREET": {
+          "@title": "{i18n>STREET}",
+          "type": "cds.String",
+          "length": 255
+        },
+        "POSTAL": {
+          "@title": "{i18n>POSTAL}",
+          "type": "cds.String",
+          "length": 12
+        },
+        "CITY": {
+          "@title": "{i18n>CITY}",
+          "type": "cds.String",
+          "length": 255
+        },
+        "COUNTRY": {
+          "@title": "{i18n>COUNTRY}",
+          "type": "cds.String",
+          "length": 255
+        },
+        "BUILDING": {
+          "@title": "{i18n>BUILDING}",
+          "type": "cds.String",
+          "length": 255
+        },
+        "NODE_KEY": {
+          "@title": "{i18n>NODE_KEY}",
+          "key": true,
+          "type": "poapp.reuse.Guid"
+        },
+        "ADDRESS_TYPE": {
+          "@title": "{i18n>ADDRESS_TYPE}",
+          "type": "poapp.reuse.String32",
+          "length": 32
+        },
+        "VAL_START": {
+          "@title": "{i18n>VAL_START}",
+          "type": "cds.Date"
+        },
+        "VAL_END": {
+          "@title": "{i18n>VAL_END}",
+          "type": "cds.Date"
+        },
+        "LATITUDE": {
+          "@title": "{i18n>LATITUDE}",
+          "type": "cds.Decimal"
+        },
+        "LONGITUDE": {
+          "@title": "{i18n>LONGITUDE}",
+          "type": "cds.Decimal"
+        },
+        "businesspartner": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": 1
+          },
+          "target": "poapp.db.master.BusinessPartners",
+          "on": [
+            {
+              "ref": [
+                "businesspartner",
+                "ADDRESS_GUID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "poapp.db.master.Products": {
+      "kind": "entity",
+      "elements": {
+        "NODE_KEY": {
+          "@title": "{i18n>NODE_KEY}",
+          "key": true,
+          "type": "poapp.reuse.Guid"
+        },
+        "PRODUCT_ID": {
+          "@title": "{i18n>PRODUCT_ID}",
+          "type": "poapp.reuse.String32",
+          "length": 32
+        },
+        "TYPE_CODE": {
+          "@title": "{i18n>TYPE_CODE}",
+          "type": "cds.String",
+          "length": 2
+        },
+        "CATEGORY": {
+          "@title": "{i18n>CATEGORY}",
+          "type": "poapp.reuse.String32",
+          "length": 32
+        },
+        "DESCRIPTION": {
+          "@title": "{i18n>DESCRIPTION}",
+          "type": "poapp.reuse.String255",
+          "length": 255
+        },
+        "TAX_TARIF_CODE": {
+          "@title": "{i18n>TAX_TARIF_CODE}",
+          "type": "cds.Integer"
+        },
+        "MEASURE_UNIT": {
+          "@title": "{i18n>MEASURE_UNIT}",
+          "type": "cds.String",
+          "length": 2
+        },
+        "WEIGHT_MEASURE": {
+          "@title": "{i18n>WEIGHT_MEASURE}",
+          "type": "cds.Decimal",
+          "precision": 15,
+          "scale": 2
+        },
+        "WEIGHT_UNIT": {
+          "@title": "{i18n>WEIGHT_UNIT}",
+          "type": "cds.String",
+          "length": 2
+        },
+        "PRICE": {
+          "@title": "{i18n>PRICE}",
+          "type": "cds.Decimal",
+          "precision": 15,
+          "scale": 2
+        },
+        "CURRENCY_CODE": {
+          "@title": "{i18n>CURRENCY_CODE}",
+          "type": "cds.String",
+          "length": 4
+        },
+        "WIDTH": {
+          "@title": "{i18n>WIDTH}",
+          "type": "cds.Decimal",
+          "precision": 5,
+          "scale": 2
+        },
+        "DEPTH": {
+          "@title": "{i18n>DEPTH}",
+          "type": "cds.Decimal",
+          "precision": 5,
+          "scale": 2
+        },
+        "HEIGHT": {
+          "@title": "{i18n>HEIGHT}",
+          "type": "cds.Decimal",
+          "precision": 5,
+          "scale": 2
+        },
+        "DIM_UNIT": {
+          "@title": "{i18n>DIM_UNIT}",
+          "type": "cds.String",
+          "length": 2
+        },
+        "SUPPLIER_GUID": {
+          "@title": "{i18n>SUPPLIER_GUID}",
+          "type": "cds.Association",
+          "target": "poapp.db.master.BusinessPartners",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "poapp.db.master.Employees": {
+      "kind": "entity",
+      "includes": [
+        "cuid"
+      ],
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "nameFirst": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameLast": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameInitials": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameMiddle": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "gender": {
+          "type": "poapp.reuse.Gender",
+          "length": 1
+        },
+        "language": {
+          "type": "cds.String",
+          "length": 2
+        },
+        "loginName": {
+          "type": "cds.String",
+          "length": 16
+        },
+        "phoneNumber": {
+          "type": "poapp.reuse.PhoneNumber",
+          "length": 32
+        },
+        "email": {
+          "type": "poapp.reuse.Email",
+          "length": 255
+        },
+        "Currency": {
+          "@title": "{i18n>Currency}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "sap.common.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "salaryAmount": {
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "accountNumber": {
+          "type": "cds.String",
+          "length": 16
+        },
+        "bankId": {
+          "type": "cds.String",
+          "length": 16
+        },
+        "bankName": {
+          "type": "cds.String",
+          "length": 64
+        }
+      }
+    },
+    "poapp.db.transaction": {
+      "kind": "context"
+    },
+    "poapp.db.transaction.PurchaseOrders": {
+      "kind": "entity",
+      "includes": [
+        "poapp.reuse.Amount"
+      ],
+      "elements": {
+        "CURRENCY": {
+          "@title": "{i18n>CURRENCY_CODE}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "sap.common.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "GROSS_AMOUNT": {
+          "@title": "{i18n>GROSS_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NET_AMOUNT": {
+          "@title": "{i18n>NET_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "TAX_AMOUNT": {
+          "@title": "{i18n>TAX_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NODE_KEY": {
+          "@title": "{i18n>NODE_KEY}",
+          "key": true,
+          "type": "poapp.reuse.Guid"
+        },
+        "PO_ID": {
+          "@title": "{i18n>PO_ID}",
+          "type": "poapp.reuse.Guid"
+        },
+        "PARTNER_GUID": {
+          "@title": "{i18n>PARTNER_GUID}",
+          "type": "cds.Association",
+          "target": "poapp.db.master.BusinessPartners",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        },
+        "LIFECYCLE_STATUS": {
+          "@title": "{i18n>LIFECYCLE_STATUS}",
+          "type": "cds.String",
+          "length": 1
+        },
+        "OVERALL_STATUS": {
+          "@title": "{i18n>OVERALL_STATUS}",
+          "type": "cds.String",
+          "length": 1
+        },
+        "Items": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "poapp.db.transaction.PurhcaseItems",
+          "on": [
+            {
+              "ref": [
+                "Items",
+                "PARENT_KEY"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "poapp.db.transaction.PurhcaseItems": {
+      "kind": "entity",
+      "includes": [
+        "poapp.reuse.Amount"
+      ],
+      "elements": {
+        "CURRENCY": {
+          "@title": "{i18n>CURRENCY_CODE}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "sap.common.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "GROSS_AMOUNT": {
+          "@title": "{i18n>GROSS_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NET_AMOUNT": {
+          "@title": "{i18n>NET_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "TAX_AMOUNT": {
+          "@title": "{i18n>TAX_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NODE_KEY": {
+          "@title": "{i18n>NODE_KEY}",
+          "key": true,
+          "type": "poapp.reuse.Guid"
+        },
+        "PARENT_KEY": {
+          "@title": "{i18n>PARENT_KEY}",
+          "type": "cds.Association",
+          "target": "poapp.db.transaction.PurchaseOrders",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        },
+        "PO_ITEMS_POS": {
+          "@title": "{i18n>PO_ITEMS_POS}",
+          "type": "cds.Integer"
+        },
+        "PRODUCT_GUID": {
+          "@title": "{i18n>PRODUCT_GUID}",
+          "type": "cds.Association",
+          "target": "poapp.db.master.Products",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "poapp.db.transaction.Languages": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 1
+        },
+        "value": {
+          "type": "cds.String",
+          "length": 10
+        }
+      }
+    },
+    "poapp.db.transaction.Countries": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 2
+        },
+        "value": {
+          "type": "cds.String",
+          "length": 80
+        }
+      }
+    },
+    "poapp.db.transaction.Genders": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.String",
+          "length": 1
+        },
+        "value": {
+          "type": "cds.String",
+          "length": 10
+        }
+      }
+    },
+    "poapp.db.transaction.EmployeeFullDetails": {
+      "kind": "entity",
+      "query": {
+        "SELECT": {
+          "from": {
+            "join": "left",
+            "args": [
+              {
+                "join": "left",
+                "args": [
+                  {
+                    "ref": [
+                      "poapp.db.master.Employees"
+                    ],
+                    "as": "employee"
+                  },
+                  {
+                    "ref": [
+                      "poapp.db.transaction.Languages"
+                    ],
+                    "as": "lang"
+                  }
+                ],
+                "on": [
+                  {
+                    "ref": [
+                      "employee",
+                      "language"
+                    ]
+                  },
+                  "=",
+                  {
+                    "ref": [
+                      "lang",
+                      "ID"
+                    ]
+                  }
+                ]
+              },
+              {
+                "ref": [
+                  "poapp.db.transaction.Genders"
+                ],
+                "as": "gen"
+              }
+            ],
+            "on": [
+              {
+                "ref": [
+                  "employee",
+                  "gender"
+                ]
+              },
+              "=",
+              {
+                "ref": [
+                  "gen",
+                  "ID"
+                ]
+              }
+            ]
+          },
+          "columns": [
+            {
+              "key": true,
+              "ref": [
+                "employee",
+                "ID"
+              ],
+              "as": "EmployeeID"
+            },
+            {
+              "ref": [
+                "employee",
+                "nameFirst"
+              ],
+              "as": "FirstName"
+            },
+            {
+              "ref": [
+                "employee",
+                "nameLast"
+              ],
+              "as": "LastName"
+            },
+            {
+              "ref": [
+                "employee",
+                "phoneNumber"
+              ],
+              "as": "Mobile"
+            },
+            {
+              "ref": [
+                "lang",
+                "value"
+              ],
+              "as": "Language"
+            },
+            {
+              "ref": [
+                "gen",
+                "value"
+              ],
+              "as": "Gender"
+            }
+          ]
+        }
+      },
+      "elements": {
+        "EmployeeID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "FirstName": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "LastName": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "Mobile": {
+          "type": "poapp.reuse.PhoneNumber",
+          "length": 32
+        },
+        "Language": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "Gender": {
+          "type": "cds.String",
+          "length": 10
+        }
+      }
+    },
+    "poapp.reuse.Guid": {
+      "kind": "type",
+      "type": "cds.UUID"
+    },
+    "poapp.reuse.PhoneNumber": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 32
+    },
+    "poapp.reuse.Email": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 255
+    },
+    "poapp.reuse.Role": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 2
+    },
+    "poapp.reuse.String32": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 32
+    },
+    "poapp.reuse.String255": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 255
+    },
+    "poapp.reuse.Gender": {
+      "kind": "type",
+      "type": "cds.String",
+      "length": 1,
+      "enum": {
+        "male": {
+          "val": "M"
+        },
+        "female": {
+          "val": "F"
+        },
+        "undisclosed": {
+          "val": "U"
+        }
+      }
+    },
+    "poapp.reuse.AmountT": {
+      "kind": "type",
+      "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+      "@sap.unit": "CURRENCY_CODE",
+      "type": "cds.Decimal",
+      "precision": 10,
+      "scale": 2
+    },
+    "poapp.reuse.Amount": {
+      "kind": "aspect",
+      "elements": {
+        "CURRENCY": {
+          "@title": "{i18n>CURRENCY_CODE}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "sap.common.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "GROSS_AMOUNT": {
+          "@title": "{i18n>GROSS_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NET_AMOUNT": {
+          "@title": "{i18n>NET_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "TAX_AMOUNT": {
+          "@title": "{i18n>TAX_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        }
+      }
+    },
+    "poapp.reuse.Address": {
+      "kind": "aspect",
+      "elements": {
+        "STREET": {
+          "@title": "{i18n>STREET}",
+          "type": "cds.String",
+          "length": 255
+        },
+        "POSTAL": {
+          "@title": "{i18n>POSTAL}",
+          "type": "cds.String",
+          "length": 12
+        },
+        "CITY": {
+          "@title": "{i18n>CITY}",
+          "type": "cds.String",
+          "length": 255
+        },
+        "COUNTRY": {
+          "@title": "{i18n>COUNTRY}",
+          "type": "cds.String",
+          "length": 255
+        },
+        "BUILDING": {
+          "@title": "{i18n>BUILDING}",
+          "type": "cds.String",
+          "length": 255
+        }
+      }
+    },
+    "CatalogService": {
+      "@source": "srv/cat-service.cds",
+      "kind": "service",
+      "@path": "cat-service",
+      "@requires": "authenticated-user"
+    },
+    "CatalogService.ProductSrv": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "poapp.db.master.Products"
+          ]
+        }
+      },
+      "elements": {
+        "NODE_KEY": {
+          "@title": "{i18n>NODE_KEY}",
+          "key": true,
+          "type": "poapp.reuse.Guid"
+        },
+        "PRODUCT_ID": {
+          "@title": "{i18n>PRODUCT_ID}",
+          "type": "poapp.reuse.String32",
+          "length": 32
+        },
+        "TYPE_CODE": {
+          "@title": "{i18n>TYPE_CODE}",
+          "type": "cds.String",
+          "length": 2
+        },
+        "CATEGORY": {
+          "@title": "{i18n>CATEGORY}",
+          "type": "poapp.reuse.String32",
+          "length": 32
+        },
+        "DESCRIPTION": {
+          "@title": "{i18n>DESCRIPTION}",
+          "type": "poapp.reuse.String255",
+          "length": 255
+        },
+        "TAX_TARIF_CODE": {
+          "@title": "{i18n>TAX_TARIF_CODE}",
+          "type": "cds.Integer"
+        },
+        "MEASURE_UNIT": {
+          "@title": "{i18n>MEASURE_UNIT}",
+          "type": "cds.String",
+          "length": 2
+        },
+        "WEIGHT_MEASURE": {
+          "@title": "{i18n>WEIGHT_MEASURE}",
+          "type": "cds.Decimal",
+          "precision": 15,
+          "scale": 2
+        },
+        "WEIGHT_UNIT": {
+          "@title": "{i18n>WEIGHT_UNIT}",
+          "type": "cds.String",
+          "length": 2
+        },
+        "PRICE": {
+          "@title": "{i18n>PRICE}",
+          "type": "cds.Decimal",
+          "precision": 15,
+          "scale": 2
+        },
+        "CURRENCY_CODE": {
+          "@title": "{i18n>CURRENCY_CODE}",
+          "type": "cds.String",
+          "length": 4
+        },
+        "WIDTH": {
+          "@title": "{i18n>WIDTH}",
+          "type": "cds.Decimal",
+          "precision": 5,
+          "scale": 2
+        },
+        "DEPTH": {
+          "@title": "{i18n>DEPTH}",
+          "type": "cds.Decimal",
+          "precision": 5,
+          "scale": 2
+        },
+        "HEIGHT": {
+          "@title": "{i18n>HEIGHT}",
+          "type": "cds.Decimal",
+          "precision": 5,
+          "scale": 2
+        },
+        "DIM_UNIT": {
+          "@title": "{i18n>DIM_UNIT}",
+          "type": "cds.String",
+          "length": 2
+        },
+        "SUPPLIER_GUID": {
+          "@title": "{i18n>SUPPLIER_GUID}",
+          "type": "cds.Association",
+          "target": "CatalogService.BusinessPartnerSrv",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "CatalogService.BusinessPartnerSrv": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "poapp.db.master.BusinessPartners"
+          ]
+        }
+      },
+      "elements": {
+        "NODE_KEY": {
+          "@title": "{i18n>NODE_KEY}",
+          "key": true,
+          "type": "poapp.reuse.Guid"
+        },
+        "BP_ROLE": {
+          "@title": "{i18n>BP_ROLE}",
+          "type": "poapp.reuse.Role",
+          "length": 2
+        },
+        "EMAIL": {
+          "@title": "{i18n>EMAIL}",
+          "type": "poapp.reuse.Email",
+          "length": 255
+        },
+        "MOBILE": {
+          "@title": "{i18n>MOBILE}",
+          "type": "poapp.reuse.PhoneNumber",
+          "length": 32
+        },
+        "FAX": {
+          "@title": "{i18n>FAX}",
+          "type": "poapp.reuse.String32",
+          "length": 32
+        },
+        "WEB": {
+          "@title": "{i18n>WEB}",
+          "type": "poapp.reuse.String255",
+          "length": 255
+        },
+        "BP_ID": {
+          "@title": "{i18n>BP_ID}",
+          "type": "poapp.reuse.Guid"
+        },
+        "COMPANY_NAME": {
+          "@title": "{i18n>COMPANY_NAME}",
+          "type": "poapp.reuse.String255",
+          "length": 255
+        },
+        "ADDRESS_GUID": {
+          "@title": "{i18n>ADDRESS_GUID}",
+          "type": "cds.Association",
+          "target": "CatalogService.AddressesSrv",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "CatalogService.AddressesSrv": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "poapp.db.master.Addresses"
+          ]
+        }
+      },
+      "elements": {
+        "STREET": {
+          "@title": "{i18n>STREET}",
+          "type": "cds.String",
+          "length": 255
+        },
+        "POSTAL": {
+          "@title": "{i18n>POSTAL}",
+          "type": "cds.String",
+          "length": 12
+        },
+        "CITY": {
+          "@title": "{i18n>CITY}",
+          "type": "cds.String",
+          "length": 255
+        },
+        "COUNTRY": {
+          "@title": "{i18n>COUNTRY}",
+          "type": "cds.String",
+          "length": 255
+        },
+        "BUILDING": {
+          "@title": "{i18n>BUILDING}",
+          "type": "cds.String",
+          "length": 255
+        },
+        "NODE_KEY": {
+          "@title": "{i18n>NODE_KEY}",
+          "key": true,
+          "type": "poapp.reuse.Guid"
+        },
+        "ADDRESS_TYPE": {
+          "@title": "{i18n>ADDRESS_TYPE}",
+          "type": "poapp.reuse.String32",
+          "length": 32
+        },
+        "VAL_START": {
+          "@title": "{i18n>VAL_START}",
+          "type": "cds.Date"
+        },
+        "VAL_END": {
+          "@title": "{i18n>VAL_END}",
+          "type": "cds.Date"
+        },
+        "LATITUDE": {
+          "@title": "{i18n>LATITUDE}",
+          "type": "cds.Decimal"
+        },
+        "LONGITUDE": {
+          "@title": "{i18n>LONGITUDE}",
+          "type": "cds.Decimal"
+        },
+        "businesspartner": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": 1
+          },
+          "target": "CatalogService.BusinessPartnerSrv",
+          "on": [
+            {
+              "ref": [
+                "businesspartner",
+                "ADDRESS_GUID"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "CatalogService.EmployeeSrv": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "poapp.db.master.Employees"
+          ]
+        }
+      },
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "nameFirst": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameLast": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameInitials": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameMiddle": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "gender": {
+          "type": "poapp.reuse.Gender",
+          "length": 1
+        },
+        "language": {
+          "type": "cds.String",
+          "length": 2
+        },
+        "loginName": {
+          "type": "cds.String",
+          "length": 16
+        },
+        "phoneNumber": {
+          "type": "poapp.reuse.PhoneNumber",
+          "length": 32
+        },
+        "email": {
+          "type": "poapp.reuse.Email",
+          "length": 255
+        },
+        "Currency": {
+          "@title": "{i18n>Currency}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "CatalogService.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "salaryAmount": {
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "accountNumber": {
+          "type": "cds.String",
+          "length": 16
+        },
+        "bankId": {
+          "type": "cds.String",
+          "length": 16
+        },
+        "bankName": {
+          "type": "cds.String",
+          "length": 64
+        }
+      }
+    },
+    "CatalogService.PurchaseOrderSrv": {
+      "kind": "entity",
+      "@UI.SelectionFields": [
+        {
+          "=": "PO_ID"
+        },
+        {
+          "=": "GROSS_AMOUNT"
+        },
+        {
+          "=": "PARTNER_GUID.COMPANY_NAME"
+        },
+        {
+          "=": "PARTNER_GUID.ADDRESS_GUID.COUNTRY"
+        }
+      ],
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PO_ID"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PARTNER_GUID.COMPANY_NAME"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PARTNER_GUID.BP_ID"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "GROSS_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "CURRENCY_code"
+          }
+        },
+        {
+          "$Type": "UI.DataFieldForAction",
+          "Action": "CatalogService.discountPrice",
+          "Label": "Discount(10%)",
+          "Inline": false
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "LST"
+          },
+          "Criticality": {
+            "=": "LSC"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "OST"
+          },
+          "Criticality": {
+            "=": "OSC"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PARTNER_GUID.ADDRESS_GUID.COUNTRY"
+          }
+        }
+      ],
+      "@UI.HeaderInfo.TypeName": "Purchase Order",
+      "@UI.HeaderInfo.TypeNamePlural": "Purchase Orders",
+      "@UI.HeaderInfo.Title.Label": "Purchase Order ID",
+      "@UI.HeaderInfo.Title.Value": {
+        "=": "PO_ID"
+      },
+      "@UI.HeaderInfo.Description.Label": "Company Name",
+      "@UI.HeaderInfo.Description.Value": {
+        "=": "PARTNER_GUID.COMPANY_NAME"
+      },
+      "@UI.HeaderInfo.ImageUrl": "https://cdn-icons-png.flaticon.com/512/5969/5969147.png",
+      "@UI.Facets": [
+        {
+          "$Type": "UI.CollectionFacet",
+          "Label": "Purhcase Order Details",
+          "Facets": [
+            {
+              "$Type": "UI.ReferenceFacet",
+              "Label": "More details about the purchase order",
+              "Target": "@UI.FieldGroup#MoreInfo"
+            },
+            {
+              "$Type": "UI.ReferenceFacet",
+              "Label": "Amount Related Information",
+              "Target": "@UI.FieldGroup#AmountInfo"
+            }
+          ]
+        },
+        {
+          "$Type": "UI.ReferenceFacet",
+          "Label": "Line Item Details",
+          "Target": "Items/@UI.LineItem"
+        }
+      ],
+      "@UI.FieldGroup#MoreInfo.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#MoreInfo.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PO_ID"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PARTNER_GUID.BP_ID"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PARTNER_GUID_NODE_KEY"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "LST"
+          },
+          "Criticality": {
+            "=": "LSC"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "OST"
+          },
+          "Criticality": {
+            "=": "OSC"
+          }
+        }
+      ],
+      "@UI.FieldGroup#AmountInfo.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#AmountInfo.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "GROSS_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "NET_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataFieldForAction",
+          "Action": "CatalogService.discountPrice",
+          "Label": "Discount(10%)",
+          "Inline": true
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "TAX_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "CURRENCY_code"
+          }
+        }
+      ],
+      "projection": {
+        "from": {
+          "ref": [
+            "poapp.db.transaction.PurchaseOrders"
+          ]
+        },
+        "columns": [
+          "*",
+          {
+            "xpr": [
+              "case",
+              {
+                "ref": [
+                  "OVERALL_STATUS"
+                ]
+              },
+              "when",
+              {
+                "val": "N"
+              },
+              "then",
+              {
+                "val": "New"
+              },
+              "when",
+              {
+                "val": "P"
+              },
+              "then",
+              {
+                "val": "Paid"
+              },
+              "when",
+              {
+                "val": "X"
+              },
+              "then",
+              {
+                "val": "Not Paid"
+              },
+              "else",
+              {
+                "val": "Completed"
+              },
+              "end"
+            ],
+            "as": "OST",
+            "cast": {
+              "type": "cds.String",
+              "length": 20
+            }
+          },
+          {
+            "xpr": [
+              "case",
+              {
+                "ref": [
+                  "OVERALL_STATUS"
+                ]
+              },
+              "when",
+              {
+                "val": "N"
+              },
+              "then",
+              {
+                "val": 1
+              },
+              "when",
+              {
+                "val": "P"
+              },
+              "then",
+              {
+                "val": 2
+              },
+              "when",
+              {
+                "val": "X"
+              },
+              "then",
+              {
+                "val": 2
+              },
+              "else",
+              {
+                "val": 1
+              },
+              "end"
+            ],
+            "as": "OSC",
+            "cast": {
+              "type": "cds.String",
+              "length": 20
+            }
+          },
+          {
+            "xpr": [
+              "case",
+              {
+                "ref": [
+                  "LIFECYCLE_STATUS"
+                ]
+              },
+              "when",
+              {
+                "val": "N"
+              },
+              "then",
+              {
+                "val": "Not Started"
+              },
+              "when",
+              {
+                "val": "P"
+              },
+              "then",
+              {
+                "val": "Pending"
+              },
+              "when",
+              {
+                "val": "D"
+              },
+              "then",
+              {
+                "val": "Delivered"
+              },
+              "when",
+              {
+                "val": "R"
+              },
+              "then",
+              {
+                "val": "Retruned"
+              },
+              "else",
+              {
+                "val": "Done"
+              },
+              "end"
+            ],
+            "as": "LST",
+            "cast": {
+              "type": "cds.String",
+              "length": 20
+            }
+          },
+          {
+            "xpr": [
+              "case",
+              {
+                "ref": [
+                  "LIFECYCLE_STATUS"
+                ]
+              },
+              "when",
+              {
+                "val": "N"
+              },
+              "then",
+              {
+                "val": 1
+              },
+              "when",
+              {
+                "val": "P"
+              },
+              "then",
+              {
+                "val": 2
+              },
+              "when",
+              {
+                "val": "D"
+              },
+              "then",
+              {
+                "val": 3
+              },
+              "when",
+              {
+                "val": "R"
+              },
+              "then",
+              {
+                "val": 2
+              },
+              "else",
+              {
+                "val": 1
+              },
+              "end"
+            ],
+            "as": "LSC",
+            "cast": {
+              "type": "cds.String",
+              "length": 20
+            }
+          }
+        ]
+      },
+      "elements": {
+        "CURRENCY": {
+          "@title": "{i18n>CURRENCY_CODE}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "CatalogService.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "GROSS_AMOUNT": {
+          "@title": "{i18n>GROSS_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NET_AMOUNT": {
+          "@title": "{i18n>NET_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "TAX_AMOUNT": {
+          "@title": "{i18n>TAX_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NODE_KEY": {
+          "@title": "{i18n>NODE_KEY}",
+          "key": true,
+          "type": "poapp.reuse.Guid"
+        },
+        "PO_ID": {
+          "@title": "{i18n>PO_ID}",
+          "type": "poapp.reuse.Guid"
+        },
+        "PARTNER_GUID": {
+          "@title": "{i18n>PARTNER_GUID}",
+          "type": "cds.Association",
+          "target": "CatalogService.BusinessPartnerSrv",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        },
+        "LIFECYCLE_STATUS": {
+          "@title": "{i18n>LIFECYCLE_STATUS}",
+          "type": "cds.String",
+          "length": 1
+        },
+        "OVERALL_STATUS": {
+          "@title": "{i18n>OVERALL_STATUS}",
+          "type": "cds.String",
+          "length": 1
+        },
+        "Items": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "CatalogService.PurhcaseItemSrv",
+          "on": [
+            {
+              "ref": [
+                "Items",
+                "PARENT_KEY"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        },
+        "OST": {
+          "@title": "{i18n>OVERALL_STATUS}",
+          "@Core.Computed": true,
+          "type": "cds.String",
+          "length": 20,
+          "$calc": {
+            "xpr": [
+              "case",
+              {
+                "ref": [
+                  "OVERALL_STATUS"
+                ]
+              },
+              "when",
+              {
+                "val": "N"
+              },
+              "then",
+              {
+                "val": "New"
+              },
+              "when",
+              {
+                "val": "P"
+              },
+              "then",
+              {
+                "val": "Paid"
+              },
+              "when",
+              {
+                "val": "X"
+              },
+              "then",
+              {
+                "val": "Not Paid"
+              },
+              "else",
+              {
+                "val": "Completed"
+              },
+              "end"
+            ]
+          }
+        },
+        "OSC": {
+          "@Core.Computed": true,
+          "type": "cds.String",
+          "length": 20,
+          "$calc": {
+            "xpr": [
+              "case",
+              {
+                "ref": [
+                  "OVERALL_STATUS"
+                ]
+              },
+              "when",
+              {
+                "val": "N"
+              },
+              "then",
+              {
+                "val": 1
+              },
+              "when",
+              {
+                "val": "P"
+              },
+              "then",
+              {
+                "val": 2
+              },
+              "when",
+              {
+                "val": "X"
+              },
+              "then",
+              {
+                "val": 2
+              },
+              "else",
+              {
+                "val": 1
+              },
+              "end"
+            ]
+          }
+        },
+        "LST": {
+          "@title": "{i18n>LIFECYCLE_STATUS}",
+          "@Core.Computed": true,
+          "type": "cds.String",
+          "length": 20,
+          "$calc": {
+            "xpr": [
+              "case",
+              {
+                "ref": [
+                  "LIFECYCLE_STATUS"
+                ]
+              },
+              "when",
+              {
+                "val": "N"
+              },
+              "then",
+              {
+                "val": "Not Started"
+              },
+              "when",
+              {
+                "val": "P"
+              },
+              "then",
+              {
+                "val": "Pending"
+              },
+              "when",
+              {
+                "val": "D"
+              },
+              "then",
+              {
+                "val": "Delivered"
+              },
+              "when",
+              {
+                "val": "R"
+              },
+              "then",
+              {
+                "val": "Retruned"
+              },
+              "else",
+              {
+                "val": "Done"
+              },
+              "end"
+            ]
+          }
+        },
+        "LSC": {
+          "@Core.Computed": true,
+          "type": "cds.String",
+          "length": 20,
+          "$calc": {
+            "xpr": [
+              "case",
+              {
+                "ref": [
+                  "LIFECYCLE_STATUS"
+                ]
+              },
+              "when",
+              {
+                "val": "N"
+              },
+              "then",
+              {
+                "val": 1
+              },
+              "when",
+              {
+                "val": "P"
+              },
+              "then",
+              {
+                "val": 2
+              },
+              "when",
+              {
+                "val": "D"
+              },
+              "then",
+              {
+                "val": 3
+              },
+              "when",
+              {
+                "val": "R"
+              },
+              "then",
+              {
+                "val": 2
+              },
+              "else",
+              {
+                "val": 1
+              },
+              "end"
+            ]
+          }
+        }
+      },
+      "actions": {
+        "discountPrice": {
+          "kind": "action",
+          "@cds.odata.bindingparameter.name": "DP",
+          "@Common.SideEffects.TargetProperties": [
+            "DP/GROSS_AMOUNT",
+            "DP/NET_AMOUNT",
+            "DP/TAX_AMOUNT"
+          ]
+        },
+        "largetOrderTop10": {
+          "kind": "function",
+          "returns": {
+            "items": {
+              "type": "CatalogService.PurchaseOrderSrv"
+            }
+          }
+        }
+      }
+    },
+    "CatalogService.PurhcaseItemSrv": {
+      "kind": "entity",
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PO_ITEMS_POS"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PRODUCT_GUID.PRODUCT_ID"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PRODUCT_GUID_NODE_KEY"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "GROSS_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "NET_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "TAX_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "CURRENCY_code"
+          }
+        }
+      ],
+      "@UI.HeaderInfo.TypeName": "Purchase Order Item",
+      "@UI.HeaderInfo.TypeNamePlural": "Purchase Order Items",
+      "@UI.HeaderInfo.Title.Label": "Purchase Order Item ID",
+      "@UI.HeaderInfo.Title.Value": {
+        "=": "PO_ITEMS_POS"
+      },
+      "@UI.HeaderInfo.Description.Label": "Product Description",
+      "@UI.HeaderInfo.Description.Value": {
+        "=": "PRODUCT_GUID.DESCRIPTION"
+      },
+      "@UI.HeaderInfo.ImageUrl": "https://cdn-icons-png.flaticon.com/512/5969/5969147.png",
+      "@UI.Facets": [
+        {
+          "$Type": "UI.CollectionFacet",
+          "Label": "Product Details",
+          "Facets": [
+            {
+              "$Type": "UI.ReferenceFacet",
+              "Label": "Purchase Item Details",
+              "Target": "@UI.FieldGroup#PIPD"
+            },
+            {
+              "$Type": "UI.ReferenceFacet",
+              "Label": "Product Details",
+              "Target": "@UI.FieldGroup#PIPI"
+            }
+          ]
+        }
+      ],
+      "@UI.FieldGroup#PIPD.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#PIPD.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "GROSS_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "NET_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "TAX_AMOUNT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "CURRENCY_code"
+          }
+        }
+      ],
+      "@UI.FieldGroup#PIPI.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#PIPI.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PRODUCT_GUID.PRODUCT_ID"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PRODUCT_GUID.DESCRIPTION"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PRODUCT_GUID.CATEGORY"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PRODUCT_GUID.PRICE"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PRODUCT_GUID.DIM_UNIT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PRODUCT_GUID.WEIGHT_UNIT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PRODUCT_GUID.WEIGHT_MEASURE"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PRODUCT_GUID.HEIGHT"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PRODUCT_GUID.DEPTH"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Value": {
+            "=": "PRODUCT_GUID.WIDTH"
+          }
+        }
+      ],
+      "projection": {
+        "from": {
+          "ref": [
+            "poapp.db.transaction.PurhcaseItems"
+          ]
+        }
+      },
+      "elements": {
+        "CURRENCY": {
+          "@title": "{i18n>CURRENCY_CODE}",
+          "@description": "{i18n>CurrencyCode.Description}",
+          "type": "Currency",
+          "target": "CatalogService.Currencies",
+          "keys": [
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "GROSS_AMOUNT": {
+          "@title": "{i18n>GROSS_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NET_AMOUNT": {
+          "@title": "{i18n>NET_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "TAX_AMOUNT": {
+          "@title": "{i18n>TAX_AMOUNT}",
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "NODE_KEY": {
+          "@title": "{i18n>NODE_KEY}",
+          "key": true,
+          "type": "poapp.reuse.Guid"
+        },
+        "PARENT_KEY": {
+          "@title": "{i18n>PARENT_KEY}",
+          "type": "cds.Association",
+          "target": "CatalogService.PurchaseOrderSrv",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        },
+        "PO_ITEMS_POS": {
+          "@title": "{i18n>PO_ITEMS_POS}",
+          "type": "cds.Integer"
+        },
+        "PRODUCT_GUID": {
+          "@title": "{i18n>PRODUCT_GUID}",
+          "type": "cds.Association",
+          "target": "CatalogService.ProductSrv",
+          "keys": [
+            {
+              "ref": [
+                "NODE_KEY"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "CatalogService.gethighestSalary": {
+      "kind": "function",
+      "returns": {
+        "items": {
+          "type": "CatalogService.EmployeeSrv"
+        }
+      }
+    },
+    "CatalogService.gethighestProducts": {
+      "kind": "function",
+      "returns": {
+        "items": {
+          "type": "CatalogService.ProductSrv"
+        }
+      }
+    },
+    "CatalogService.insertEmployee": {
+      "kind": "action",
+      "params": {
+        "Currency_code": {
+          "type": "cds.String"
+        },
+        "ID": {
+          "type": "cds.UUID"
+        },
+        "nameFirst": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameLast": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameInitials": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "nameMiddle": {
+          "type": "cds.String",
+          "length": 40
+        },
+        "gender": {
+          "type": "poapp.reuse.Gender",
+          "length": 1
+        },
+        "language": {
+          "type": "cds.String",
+          "length": 2
+        },
+        "loginName": {
+          "type": "cds.String",
+          "length": 16
+        },
+        "phoneNumber": {
+          "type": "poapp.reuse.PhoneNumber",
+          "length": 32
+        },
+        "email": {
+          "type": "poapp.reuse.Email",
+          "length": 255
+        },
+        "salaryAmount": {
+          "@Semantics.amount.currencyCode": "CURRENCY_CODE",
+          "@sap.unit": "CURRENCY_CODE",
+          "type": "poapp.reuse.AmountT",
+          "precision": 10,
+          "scale": 2
+        },
+        "accountNumber": {
+          "type": "cds.String",
+          "length": 16
+        },
+        "bankId": {
+          "type": "cds.String",
+          "length": 16
+        },
+        "bankName": {
+          "type": "cds.String",
+          "length": 64
+        }
+      },
+      "returns": {
+        "items": {
+          "type": "CatalogService.EmployeeSrv"
+        }
+      }
+    },
+    "cds.outbox.Messages": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        },
+        "timestamp": {
+          "type": "cds.Timestamp"
+        },
+        "target": {
+          "type": "cds.String"
+        },
+        "msg": {
+          "type": "cds.LargeString"
+        },
+        "attempts": {
+          "type": "cds.Integer",
+          "default": {
+            "val": 0
+          }
+        },
+        "partition": {
+          "type": "cds.Integer",
+          "default": {
+            "val": 0
+          }
+        },
+        "lastError": {
+          "type": "cds.LargeString"
+        },
+        "lastAttemptTimestamp": {
+          "type": "cds.Timestamp"
+        },
+        "status": {
+          "type": "cds.String",
+          "length": 23
+        },
+        "task": {
+          "type": "cds.String",
+          "length": 255
+        },
+        "appid": {
+          "type": "cds.String",
+          "length": 255
+        }
+      }
+    },
+    "Language": {
+      "kind": "type",
+      "@title": "{i18n>Language}",
+      "@description": "{i18n>LanguageCode.Description}",
+      "type": "cds.Association",
+      "target": "sap.common.Languages",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "Currency": {
+      "kind": "type",
+      "@title": "{i18n>Currency}",
+      "@description": "{i18n>CurrencyCode.Description}",
+      "type": "cds.Association",
+      "target": "sap.common.Currencies",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "Country": {
+      "kind": "type",
+      "@title": "{i18n>Country}",
+      "@description": "{i18n>CountryCode.Description}",
+      "type": "cds.Association",
+      "target": "sap.common.Countries",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "Timezone": {
+      "kind": "type",
+      "type": "cds.Association",
+      "target": "sap.common.Timezones",
+      "keys": [
+        {
+          "ref": [
+            "code"
+          ]
+        }
+      ]
+    },
+    "sap.common": {
+      "kind": "context"
+    },
+    "sap.common.Locale": {
+      "kind": "type",
+      "@title": "{i18n>LanguageCode}",
+      "type": "cds.String",
+      "length": 14
+    },
+    "sap.common.Languages": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "includes": [
+        "sap.common.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@Common.Text": {
+            "=": "name"
+          },
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.common.Languages.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.common.Languages.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.common.Countries": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "includes": [
+        "sap.common.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>CountryCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.common.Countries.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.common.Countries.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.common.Currencies": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "includes": [
+        "sap.common.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "symbol": {
+          "@title": "{i18n>CurrencySymbol}",
+          "type": "cds.String",
+          "length": 5
+        },
+        "minorUnit": {
+          "@title": "{i18n>CurrencyMinorUnit}",
+          "type": "cds.Int16"
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.common.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.common.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.common.Timezones": {
+      "kind": "entity",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "includes": [
+        "sap.common.CodeList"
+      ],
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>TimeZoneCode}",
+          "key": true,
+          "type": "cds.String",
+          "length": 100
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "sap.common.Timezones.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "sap.common.Timezones.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.common.CodeList": {
+      "kind": "aspect",
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        }
+      }
+    },
+    "sap.common.TextsAspect": {
+      "kind": "aspect",
+      "elements": {
+        "locale": {
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        }
+      }
+    },
+    "sap.common.FlowHistory": {
+      "kind": "aspect",
+      "@cds.persistence.skip": "if-unused",
+      "elements": {
+        "transitions_": {
+          "@odata.draft.enabled": false,
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "targetAspect": {
+            "elements": {
+              "timestamp": {
+                "@cds.on.insert": {
+                  "=": "$now"
+                },
+                "@UI.HiddenFilter": true,
+                "@UI.ExcludeFromNavigationContext": true,
+                "@Core.Immutable": true,
+                "@title": "{i18n>CreatedAt}",
+                "@readonly": true,
+                "key": true,
+                "type": {
+                  "ref": [
+                    "managed",
+                    "createdAt"
+                  ]
+                }
+              },
+              "user": {
+                "@cds.on.insert": {
+                  "=": "$user"
+                },
+                "@UI.HiddenFilter": true,
+                "@UI.ExcludeFromNavigationContext": true,
+                "@Core.Immutable": true,
+                "@title": "{i18n>CreatedBy}",
+                "@readonly": true,
+                "@description": "{i18n>UserID.Description}",
+                "type": {
+                  "ref": [
+                    "managed",
+                    "createdBy"
+                  ]
+                },
+                "length": 255
+              },
+              "status": {
+                "type": "cds.String"
+              },
+              "comment": {
+                "type": "cds.String"
+              }
+            }
+          }
+        }
+      }
+    },
+    "cuid": {
+      "kind": "aspect",
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.UUID"
+        }
+      }
+    },
+    "managed": {
+      "kind": "aspect",
+      "elements": {
+        "createdAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@UI.ExcludeFromNavigationContext": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "createdBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@UI.ExcludeFromNavigationContext": true,
+          "@Core.Immutable": true,
+          "@title": "{i18n>CreatedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        },
+        "modifiedAt": {
+          "@cds.on.insert": {
+            "=": "$now"
+          },
+          "@cds.on.update": {
+            "=": "$now"
+          },
+          "@UI.HiddenFilter": true,
+          "@UI.ExcludeFromNavigationContext": true,
+          "@title": "{i18n>ChangedAt}",
+          "@readonly": true,
+          "type": "cds.Timestamp"
+        },
+        "modifiedBy": {
+          "@cds.on.insert": {
+            "=": "$user"
+          },
+          "@cds.on.update": {
+            "=": "$user"
+          },
+          "@UI.HiddenFilter": true,
+          "@UI.ExcludeFromNavigationContext": true,
+          "@title": "{i18n>ChangedBy}",
+          "@readonly": true,
+          "@description": "{i18n>UserID.Description}",
+          "type": "User",
+          "length": 255
+        }
+      }
+    },
+    "temporal": {
+      "kind": "aspect",
+      "elements": {
+        "validFrom": {
+          "@cds.valid.from": true,
+          "type": "cds.Timestamp"
+        },
+        "validTo": {
+          "@cds.valid.to": true,
+          "type": "cds.Timestamp"
+        }
+      }
+    },
+    "User": {
+      "kind": "type",
+      "@title": "{i18n>UserID}",
+      "@description": "{i18n>UserID.Description}",
+      "type": "cds.String",
+      "length": 255
+    },
+    "sap.common.Currencies.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "includes": [
+        "sap.common.TextsAspect"
+      ],
+      "elements": {
+        "locale": {
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        }
+      }
+    },
+    "CatalogService.Currencies": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@cds.autoexpose": true,
+      "@cds.persistence.skip": "if-unused",
+      "@UI.Identification": [
+        {
+          "Value": {
+            "=": "name"
+          }
+        }
+      ],
+      "@cds.odata.valuelist": true,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.common.Currencies"
+          ]
+        }
+      },
+      "elements": {
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": true,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        },
+        "symbol": {
+          "@title": "{i18n>CurrencySymbol}",
+          "type": "cds.String",
+          "length": 5
+        },
+        "minorUnit": {
+          "@title": "{i18n>CurrencyMinorUnit}",
+          "type": "cds.Int16"
+        },
+        "texts": {
+          "type": "cds.Composition",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "CatalogService.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "texts",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            }
+          ]
+        },
+        "localized": {
+          "type": "cds.Association",
+          "target": "CatalogService.Currencies.texts",
+          "on": [
+            {
+              "ref": [
+                "localized",
+                "code"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "code"
+              ]
+            },
+            "and",
+            {
+              "ref": [
+                "localized",
+                "locale"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$user",
+                "locale"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "sap.common.Languages.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "includes": [
+        "sap.common.TextsAspect"
+      ],
+      "elements": {
+        "locale": {
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@Common.Text": {
+            "=": "name"
+          },
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        }
+      }
+    },
+    "sap.common.Countries.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "includes": [
+        "sap.common.TextsAspect"
+      ],
+      "elements": {
+        "locale": {
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>CountryCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        }
+      }
+    },
+    "sap.common.Timezones.texts": {
+      "kind": "entity",
+      "@odata.draft.enabled": false,
+      "includes": [
+        "sap.common.TextsAspect"
+      ],
+      "elements": {
+        "locale": {
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>TimeZoneCode}",
+          "key": true,
+          "type": "cds.String",
+          "length": 100
+        }
+      }
+    },
+    "CatalogService.Currencies.texts": {
+      "kind": "entity",
+      "@cds.autoexposed": true,
+      "@odata.draft.enabled": false,
+      "projection": {
+        "from": {
+          "ref": [
+            "sap.common.Currencies.texts"
+          ]
+        }
+      },
+      "elements": {
+        "locale": {
+          "@title": "{i18n>LanguageCode}",
+          "key": true,
+          "type": "sap.common.Locale",
+          "length": 14
+        },
+        "name": {
+          "@title": "{i18n>Name}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 255
+        },
+        "descr": {
+          "@title": "{i18n>Description}",
+          "localized": null,
+          "type": "cds.String",
+          "length": 1000
+        },
+        "code": {
+          "@odata.containment.ignore": true,
+          "@title": "{i18n>CurrencyCode}",
+          "@Common.Text": {
+            "=": "name"
+          },
+          "key": true,
+          "type": "cds.String",
+          "length": 3
+        }
+      }
+    }
+  },
+  "meta": {
+    "creator": "CDS Compiler v6.9.1",
+    "compilerVersion": "6.9.1",
+    "compilerCsnFlavor": "inferred",
+    "flavor": "inferred"
+  },
+  "$version": "2.0"
+}

@@ -1,0 +1,10 @@
+VIEW poapp_cdsviews_CDSViews_ProductView AS SELECT
+  Products_0.NODE_KEY AS ProductKey,
+  Products_0.DESCRIPTION AS Description,
+  Products_0.CATEGORY AS Category,
+  Products_0.PRICE AS Price,
+  SUPPLIER_GUID_1.BP_ID AS SupplierID,
+  SUPPLIER_GUID_1.COMPANY_NAME AS CompanyName,
+  ADDRESS_GUID_2.CITY AS City,
+  ADDRESS_GUID_2.COUNTRY AS Country
+FROM ((poapp_db_master_Products AS Products_0 LEFT JOIN poapp_db_master_BusinessPartners AS SUPPLIER_GUID_1 ON Products_0.SUPPLIER_GUID_NODE_KEY = SUPPLIER_GUID_1.NODE_KEY) LEFT JOIN poapp_db_master_Addresses AS ADDRESS_GUID_2 ON SUPPLIER_GUID_1.ADDRESS_GUID_NODE_KEY = ADDRESS_GUID_2.NODE_KEY)

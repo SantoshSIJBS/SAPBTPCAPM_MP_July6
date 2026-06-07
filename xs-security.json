@@ -1,0 +1,68 @@
+{
+  "xsappname": "poapp",
+  "tenant-mode": "dedicated",
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.view",
+      "description": "View access to the application"
+    },
+    {
+      "name": "$XSAPPNAME.admin",
+      "description": "Admin access to the application"
+    }
+  ],
+  "attributes": [
+    {
+      "name": "myCountry",
+      "description": " View access to the application",
+      "valueType": "string"
+    }
+  ],
+  "role-templates": [
+    {
+      "name": "Viewer",
+      "description": "Viewer role with view access",
+      "scope-references": [
+        "$XSAPPNAME.view"
+      ],
+      "attribute-references": [
+        {
+          "name": "myCountry"
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "description": "Admin role with admin access",
+      "scope-references": [
+        "$XSAPPNAME.admin"
+      ]
+    }
+  ],
+  "role-collections": [
+    {
+      "name": "POAppViewers",
+      "description": "Role collection for PO App viewers",
+      "role-template-references": [
+        "$XSAPPNAME.view"
+      ]
+    },
+    {
+      "name": "POAppAdmins",
+      "description": "Role collection for PO App admins",
+      "role-template-references": [
+        "$XSAPPNAME.admin"
+      ]
+    }
+  ],
+  "authorities": [
+    "$ACCEPT_GRANTED_AUTHORITIES"
+  ],
+  "oauth2-configuration": {
+    "token-validity": 9000,
+    "redirect-uris": [
+      "https://*.cfapps.us10-001.hana.ondemand.com/login/callback"
+    ]
+  },
+  "xsenableasyncservice": true
+}

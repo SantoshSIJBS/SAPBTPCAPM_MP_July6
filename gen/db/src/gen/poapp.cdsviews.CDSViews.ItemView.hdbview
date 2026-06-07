@@ -1,0 +1,10 @@
+VIEW poapp_cdsviews_CDSViews_ItemView AS SELECT
+  PARENT_KEY_1.PARTNER_GUID_NODE_KEY AS PartnerKey,
+  PurhcaseItems_0.PRODUCT_GUID_NODE_KEY AS ProductKey,
+  PARENT_KEY_1.OVERALL_STATUS AS OverallStatus,
+  PurhcaseItems_0.CURRENCY_code AS Currency_code,
+  PurhcaseItems_0.GROSS_AMOUNT AS GrossAmount,
+  PurhcaseItems_0.NET_AMOUNT AS NetAmount,
+  PurhcaseItems_0.TAX_AMOUNT AS TaxAmount,
+  PARENT_KEY_1.OVERALL_STATUS AS Status
+FROM (poapp_db_transaction_PurhcaseItems AS PurhcaseItems_0 LEFT JOIN poapp_db_transaction_PurchaseOrders AS PARENT_KEY_1 ON PurhcaseItems_0.PARENT_KEY_NODE_KEY = PARENT_KEY_1.NODE_KEY)

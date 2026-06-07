@@ -1,0 +1,15 @@
+VIEW CatalogService_PurchaseOrderSrv AS SELECT
+  PurchaseOrders_0.CURRENCY_code,
+  PurchaseOrders_0.GROSS_AMOUNT,
+  PurchaseOrders_0.NET_AMOUNT,
+  PurchaseOrders_0.TAX_AMOUNT,
+  PurchaseOrders_0.NODE_KEY,
+  PurchaseOrders_0.PO_ID,
+  PurchaseOrders_0.PARTNER_GUID_NODE_KEY,
+  PurchaseOrders_0.LIFECYCLE_STATUS,
+  PurchaseOrders_0.OVERALL_STATUS,
+  CASE PurchaseOrders_0.OVERALL_STATUS WHEN 'N' THEN 'New' WHEN 'P' THEN 'Paid' WHEN 'X' THEN 'Not Paid' ELSE 'Completed' END AS OST,
+  CASE PurchaseOrders_0.OVERALL_STATUS WHEN 'N' THEN 1 WHEN 'P' THEN 2 WHEN 'X' THEN 2 ELSE 1 END AS OSC,
+  CASE PurchaseOrders_0.LIFECYCLE_STATUS WHEN 'N' THEN 'Not Started' WHEN 'P' THEN 'Pending' WHEN 'D' THEN 'Delivered' WHEN 'R' THEN 'Retruned' ELSE 'Done' END AS LST,
+  CASE PurchaseOrders_0.LIFECYCLE_STATUS WHEN 'N' THEN 1 WHEN 'P' THEN 2 WHEN 'D' THEN 3 WHEN 'R' THEN 2 ELSE 1 END AS LSC
+FROM poapp_db_transaction_PurchaseOrders AS PurchaseOrders_0

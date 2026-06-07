@@ -1,0 +1,10 @@
+VIEW CatalogService_PurhcaseItemSrv AS SELECT
+  PurhcaseItems_0.CURRENCY_code,
+  PurhcaseItems_0.GROSS_AMOUNT,
+  PurhcaseItems_0.NET_AMOUNT,
+  PurhcaseItems_0.TAX_AMOUNT,
+  PurhcaseItems_0.NODE_KEY,
+  PurhcaseItems_0.PARENT_KEY_NODE_KEY,
+  PurhcaseItems_0.PO_ITEMS_POS,
+  PurhcaseItems_0.PRODUCT_GUID_NODE_KEY
+FROM poapp_db_transaction_PurhcaseItems AS PurhcaseItems_0

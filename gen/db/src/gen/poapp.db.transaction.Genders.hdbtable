@@ -1,0 +1,5 @@
+COLUMN TABLE poapp_db_transaction_Genders (
+  ID NVARCHAR(1) NOT NULL,
+  value NVARCHAR(10),
+  PRIMARY KEY(ID)
+)

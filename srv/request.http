@@ -1,0 +1,106 @@
+### Testing the service
+http://localhost:4004/odata/v4/cat-service/
+
+
+### Get all proudcts
+http://localhost:4004/odata/v4/cat-service/ProductSrv
+
+### Get first 10 records
+http://localhost:4004/odata/v4/cat-service/ProductSrv?$top=10
+
+### Skip first 10 records and show next 10 records
+http://localhost:4004/odata/v4/cat-service/ProductSrv?$skip=10&$top=10
+
+### Get products with price greater than 200
+http://localhost:4004/odata/v4/cat-service/ProductSrv?$filter=PRICE gt 300 & MEASURE_UNIT eq 'EA'
+
+### Get few details of Products
+http://localhost:4004/odata/v4/cat-service/ProductSrv?$select=PRODUCT_ID,DESCRIPTION,CATEGORY,WIDTH,HEIGHT,DEPTH
+
+### Get number of products
+http://localhost:4004/odata/v4/cat-service/EmployeeSrv/$count
+
+
+### Get all orders and item details
+http://localhost:4004/odata/v4/cat-service/PurchaseOrderSrv?$expand=Items
+Authorization: Basic Viewer:viewer
+
+
+### Insert a record into the Employee Service
+POST http://localhost:4004/odata/v4/cat-service/EmployeeSrv
+Content-Type: application/json
+
+{
+  "Currency_code": "USD",
+  "ID": "02BD2137-0890-1EEA-A6C2-BB55C19787YY",
+  "accountNumber": "111222444",
+  "bankId": "510000766",
+  "bankName": "My Bank of Mumbai",
+  "email": "vk.sharma@itelo.info",
+  "gender": "M",
+  "language": "E",
+  "loginName": "VKSHARMA",
+  "nameFirst": "VK",
+  "nameInitials": null,
+  "nameLast": "Sharma",
+  "nameMiddle": null,
+  "phoneNumber": "+1 998 364 555",
+  "salaryAmount": "55549.00"
+}
+
+### Update the salary of an employee
+PUT http://localhost:4004/odata/v4/cat-service/EmployeeSrv/02BD2137-0890-1EEA-A6C2-BB55C19787YY
+Content-Type: application/json
+
+{
+    "Currency_code": "USD",
+    "salaryAmount": "90000.00"
+}
+
+
+### Delete an employee record
+DELETE http://localhost:4004/odata/v4/cat-service/EmployeeSrv/02BD2137-0890-1EEA-A6C2-BB55C19787YY
+
+### Get first 10 heighest salaries
+http://localhost:4004/odata/v4/cat-service/gethighestSalary
+
+
+### Get first 10 heighest priced products
+http://localhost:4004/odata/v4/cat-service/POWorklist
+
+
+### Insert employee data
+POST http://localhost:4004/odata/v4/cat-service/insertEmployee
+Content-Type: application/json
+
+{
+  "Currency_code": "USD",
+  "ID": "02BD2137-0890-1EEA-A6C2-BB55C19799DD",
+  "accountNumber": "111222111",
+  "bankId": "510000788",
+  "bankName": "My Bank of Delhi",
+  "email": "virat.kohli@itelo.info",
+  "gender": "M",
+  "language": "E",
+  "loginName": "VKOHLI",
+  "nameFirst": "Virat",
+  "nameInitials": null,
+  "nameLast": "Kohli",
+  "nameMiddle": null,
+  "phoneNumber": "+1 998 364 999",
+  "salaryAmount": "55500.00"
+}
+
+### Get purchase order details
+GET http://localhost:4004/odata/v4/cat-service/PurchaseOrderSrv/74867AD200E41EDBA5D8B0C98DC28052
+
+### Provide discount using instance bounded action based on the parameter passed
+POST http://localhost:4004/odata/v4/cat-service/PurchaseOrderSrv/74867AD200E41EDBA5D8B0C98DC28052/discountPrice
+Content-Type: application/json
+
+{
+}
+
+
+### Get top 10 highest priced orders using instance bounded function
+GET http://localhost:4004/odata/v4/cat-service/PurchaseOrderSrv/74867AD200E41EDBA5D8B0C98DC28052/largetOrderTop10()

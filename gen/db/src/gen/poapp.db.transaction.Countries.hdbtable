@@ -1,0 +1,5 @@
+COLUMN TABLE poapp_db_transaction_Countries (
+  ID NVARCHAR(2) NOT NULL,
+  value NVARCHAR(80),
+  PRIMARY KEY(ID)
+)

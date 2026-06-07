@@ -1,0 +1,15 @@
+VIEW poapp_cdsviews_CDSViews_POWorklist AS SELECT
+  PurchaseOrders_0.PO_ID AS PurchaseOrderID,
+  Items_1.PO_ITEMS_POS AS PurchaseOrderItemPosition,
+  PARTNER_GUID_3.BP_ID AS BusinessPartnerID,
+  PARTNER_GUID_3.COMPANY_NAME AS CompanyName,
+  ADDRESS_GUID_4.CITY AS City,
+  ADDRESS_GUID_4.COUNTRY AS Country,
+  PurchaseOrders_0.GROSS_AMOUNT AS GrossAmount,
+  PurchaseOrders_0.NET_AMOUNT AS NetAmount,
+  PurchaseOrders_0.TAX_AMOUNT AS TaxAmount,
+  PurchaseOrders_0.CURRENCY_code AS CurrencyCode_code,
+  PurchaseOrders_0.OVERALL_STATUS AS OverallStatus,
+  PRODUCT_GUID_2.PRODUCT_ID AS ProductID,
+  PRODUCT_GUID_2.DESCRIPTION AS ProductDescription
+FROM ((((poapp_db_transaction_PurchaseOrders AS PurchaseOrders_0 LEFT JOIN poapp_db_transaction_PurhcaseItems AS Items_1 ON (Items_1.PARENT_KEY_NODE_KEY = PurchaseOrders_0.NODE_KEY)) LEFT JOIN poapp_db_master_Products AS PRODUCT_GUID_2 ON Items_1.PRODUCT_GUID_NODE_KEY = PRODUCT_GUID_2.NODE_KEY) LEFT JOIN poapp_db_master_BusinessPartners AS PARTNER_GUID_3 ON PurchaseOrders_0.PARTNER_GUID_NODE_KEY = PARTNER_GUID_3.NODE_KEY) LEFT JOIN poapp_db_master_Addresses AS ADDRESS_GUID_4 ON PARTNER_GUID_3.ADDRESS_GUID_NODE_KEY = ADDRESS_GUID_4.NODE_KEY)
