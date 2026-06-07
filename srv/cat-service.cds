@@ -25,12 +25,7 @@ service CatalogService @(path: 'cat-service', requires: 'authenticated-user') {
     }]
     entity EmployeeSrv as projection on database.master.Employees;
 
-    @restrict : [{
-        grant : 'UPDATE',
-        to : [
-            'Admin'
-        ]
-    }]
+
     entity PurchaseOrderSrv as projection on database.transaction.PurchaseOrders{
         *,
         case OVERALL_STATUS
